@@ -1,11 +1,12 @@
 <?php
 namespace App\Http\Controllers\API;
+
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\UserRegister;
-use App\Http\Requests\UserUpdate;
-use App\Http\Requests\UserLogin;
+use App\Http\Requests\UserRegisterRequest;
+use App\Http\Requests\UserUpdateRequest;
+use App\Http\Requests\UserLoginRequest;
 use Illuminate\Support\Facades\View;
 use App\Services\UserService;
 
@@ -30,7 +31,7 @@ class UserController extends Controller
         $user = User::create($validated);
         return redirect()->back()->with('thongbao',"Đăng kí không thành công.");
     }
-/**
+    /**
      * login api
      */
     public function getlogin(){
@@ -51,7 +52,7 @@ class UserController extends Controller
         Auth::logout();
         return redirect()->route('login');
     }
-/**
+    /**
      * details api
      *
      * @return \Illuminate\Http\Response
