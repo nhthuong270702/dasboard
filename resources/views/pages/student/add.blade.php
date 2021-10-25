@@ -10,13 +10,9 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Id</th>
                     <th>Name</th>
                 </tr>
                 <tr>
-                    <th>
-                        <input type="text" name="id" value="">
-                    </th>
                     <th>
                         <input type="text" name="name" value="">
                     </th>

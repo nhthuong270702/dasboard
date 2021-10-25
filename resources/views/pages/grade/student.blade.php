@@ -17,12 +17,14 @@
                          </tr>
                      </thead>
                      <tbody>
-                        @foreach($students as $st)
-                            <tr>
-                                <td>{{$st->id}}</td>
-                                <td>{{$st->name}}</td>
-                            </tr>
-                        @endforeach
+                        @if (isset($students))
+                            @foreach($students as $st)
+                                <tr>
+                                    <td>{{$st->id}}</td>
+                                    <td>{{$st->name}}</td>
+                                </tr>
+                            @endforeach
+                        @endif
                      </tbody>
                  </table>
               </div>

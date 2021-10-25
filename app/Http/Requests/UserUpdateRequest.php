@@ -32,8 +32,4 @@ class UserUpdateRequest extends FormRequest
             'password' => 'required|string',
         ];
     }
-    public function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([$validator->errors()], 200));
-    }
 }

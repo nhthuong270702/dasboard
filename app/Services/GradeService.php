@@ -2,6 +2,10 @@
 
 namespace App\Services;
 
+<<<<<<< HEAD
+=======
+use Illuminate\Http\Request;
+>>>>>>> ab87e36 ('update')
 use App\Models\Grade;
 use App\Http\Requests\StoreGradeRequest;
 use App\Http\Requests\UpdateGradeRequest;
@@ -50,5 +54,15 @@ class GradeService
     public function showStudentInGrade($id) {
         $grade = Grade::find($id);
         return $grade->students->all();
+    }
+    //deletall
+    public function deleteall(Request $request) {
+        $ids = $request->ids;
+        Grade::whereIn('id',explode(",",$ids))->delete();
+    }
+    //khoi phuc cac tep da xoa
+    public function restore(Request $request)
+    {
+        Grade::onlyTrashed()->restore();
     }
 }

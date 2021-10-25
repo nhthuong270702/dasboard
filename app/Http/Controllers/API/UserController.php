@@ -3,6 +3,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserRegisterRequest;
 use App\Http\Requests\UserUpdateRequest;
@@ -23,13 +24,15 @@ class UserController extends Controller
     {
         return view('register');
     }
-    public function register(UserRegister $request)
+    public function register(UserRegisterRequest $request)
     {
-        $validated = $request->validated();
-        $password = $validated['password'];
-        $validated["password"] = bcrypt($validated["password"]);
-        $user = User::create($validated);
-        return redirect()->back()->with('thongbao',"Đăng kí không thành công.");
+        $data = $request->validated();
+        $data["password"] =  bcrypt($request-> get('password'));
+        if(User::create($data)){
+            return redirect('login');
+        }else{
+            return back()->withInput()->with('thongbao1',"Mật khẩu và xác nhận mật khẩu không giống nhau.");
+        }
     }
     /**
      * login api
@@ -37,20 +40,19 @@ class UserController extends Controller
     public function getlogin(){
         return view('login');
     }
-
-    public function login(UserLogin $request){
+    public function login(UserLoginRequest $request){
         $validated = $request->validated();
-
         if(Auth::attempt($validated)){
             return redirect('/dashboard');
         }else{
-            return redirect()->route('login')->with('thongbao',"Email hoặc mật khẩu không đúng.");
+            return back()->withInput()->with('thongbao','Email hoặc mật khẩu không đúng.');
         }
     }
+
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('login');
+        return redirect('/login');
     }
     /**
      * details api
@@ -72,7 +74,7 @@ class UserController extends Controller
         return View::make('pages.user.update', compact('user'));
     }
      //cap nhat
-     public function update(UserUpdate $request, $id)
+     public function update(UserUpdateRequest $request, $id)
      {
          $this->user->updateUser($request, $id);
          return redirect()->route('user.list');
@@ -83,5 +85,16 @@ class UserController extends Controller
 
         return redirect()->route('user.list');
     }
-
+    //xoa cac checkbox
+    public function deleteall(Request $request)
+    {
+        $this->user->deleteall($request);
+        return response()->json(['success'=>'thanh cong']);
+    }
+    //khoi phuc cac tep da xoa
+    public function restore(Request $request)
+    {
+        $this->user->restore($request);
+        return redirect()->route('user.list');
+    }
 }

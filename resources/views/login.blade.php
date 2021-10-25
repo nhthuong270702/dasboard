@@ -23,13 +23,23 @@
                                 {{session('thongbao')}}
                             </div>
                         @endif
-                    <form method="post" action="{{route('login')}}">
+
+                        @if ($errors->any())
+                        <ul class="alert alert-danger">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+
+                    <form method="post" action="{{route('login')}}" role="form">
                         @csrf
+                        @method('post')
                         <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                         <label for="">Email</label>
-                        <input class="form-control" type="text" name="email" placeholder="Input Email" required>
+                        <input class="form-control" type="text" name="email" placeholder="Input Email" value="{{ old('email') }}">
                         <label for="">Password</label>
-                        <input class="form-control" type="password" name="password" placeholder="Input Password" required><br>
+                        <input class="form-control" type="password" name="password" placeholder="Input Password"><br>
                       <button type="submit" class="btn btn-primary center-block" name="login">Login</button><br>
                       <span>Don't have an account?
                     <a href="{{ route('register')}}">Register Now!</a>

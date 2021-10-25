@@ -25,11 +25,11 @@ Route::get('/clear-cache', function() {
     // return what you want
 });
 
-Route::get('login', 'API\UserController@getlogin')->name('getlogin');
-Route::get('logout', 'API\UserController@logout')->name('logout');
-Route::get('register', 'API\UserController@getRegister')->name('getregister');
+Route::get('login', 'API\UserController@getlogin')->name('getlogin')->middleware('login');
 Route::post('login', 'API\UserController@login')->name('login');
+Route::get('register', 'API\UserController@getRegister')->name('getregister');
 Route::post('register', 'API\UserController@register')->name('register');
+Route::get('logout', 'API\UserController@logout')->name('logout');
 
 Route::group(['middleware' => 'auth',], function () {
     //user routes
@@ -40,28 +40,35 @@ Route::group(['middleware' => 'auth',], function () {
         Route::get('edit/{id}', 'UserController@show')->name('edit');
         Route::put('edit/{id}', 'UserController@update')->name('update');
         Route::get('delete/{id}', 'UserController@detroy')->name('delete');
+        Route::get('deleteall','UserController@deleteall')->name('deleteall');
+        Route::get('restore','UserController@restore')->name('restore');
     });
     //student routes
     Route::group(['prefix' => 'student', 'namespace' => 'API', 'as' => 'student.'], function(){
         Route::get('/', 'StudentController@index')->name('list');
-        Route::get('create', 'StudentController@create')->name('create')->middleware('admin');
-        Route::post('create', 'StudentController@store')->name('store')->middleware('admin');
-        Route::get('edit/{id}', 'StudentController@edit')->name('edit')->middleware('admin');
-        Route::put('edit/{id}', 'StudentController@update')->name('update')->middleware('admin');
-        Route::get('delete/{id}', 'StudentController@destroy')->name('detroy')->middleware('admin');
+        Route::get('create', 'StudentController@create')->name('create');
+        Route::post('create', 'StudentController@store')->name('store');
+        Route::get('edit/{id}', 'StudentController@edit')->name('edit');
+        Route::put('edit/{id}', 'StudentController@update')->name('update');
+        Route::delete('delete/{id}', 'StudentController@destroy')->name('delete');
+        Route::get('deleteall','StudentController@deleteall')->name('deleteall');
+        Route::get('restore','StudentController@restore')->name('restore');
         Route::get('countstudents', 'StudentController@countStudent')->name('countstudent');
     });
     //grade routes
     Route::group(['prefix' => 'grade', 'namespace' => 'API', 'as' => 'grade.'], function(){
         Route::get('/', 'GradeController@index')->name('list');
-        Route::get('create', 'GradeController@create')->name('create')->middleware('admin');
-        Route::post('create', 'GradeController@store')->name('store')->middleware('admin');
-        Route::get('edit/{id}', 'GradeController@edit')->name('edit')->middleware('admin');
-        Route::put('edit/{id}', 'GradeController@update')->name('update')->middleware('admin');
-        Route::get('delete/{id}', 'GradeController@destroy')->name('delete')->middleware('admin');
+        Route::get('create', 'GradeController@create')->name('create');
+        Route::post('create', 'GradeController@store')->name('store');
+        Route::get('edit/{id}', 'GradeController@edit')->name('edit');
+        Route::put('edit/{id}', 'GradeController@update')->name('update');
+        Route::delete('delete/{id}', 'GradeController@destroy')->name('delete');
+        Route::get('deleteall', 'GradeController@deleteall')->name('deleteall');;
+        Route::get('restore','GradeController@restore')->name('restore');
         Route::get('showstudent/{id}', 'GradeController@showStudentInGrade')->name('student');
         Route::get('show', 'GradeController@allClassStudent')->name('all');
     });
+
 });
 
 

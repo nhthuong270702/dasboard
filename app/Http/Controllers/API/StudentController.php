@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Student;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
@@ -67,10 +68,22 @@ class StudentController extends Controller
         $this->student->deleteById($id);
         return redirect()->route('student.list');
     }
+    //xoa nhieu
+    public function deleteall(Request $request)
+    {
+        $this->student->deleteall($request);
+        return response()->json(['success'=>'thanh cong']);
+    }
     //dem so hoc sinh trong lop
     public function countStudent(Student $student)
     {
         $hi = $this->student->countStudent($student);
         return View::make('student.index', compact('hi'));
+    }
+    //khoi phuc cac tep da xoa
+    public function restore(Request $request)
+    {
+        $this->student->restore($request);
+        return redirect()->route('student.list');
     }
 }

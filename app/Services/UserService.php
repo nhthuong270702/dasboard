@@ -2,6 +2,10 @@
 namespace App\Services;
 
 use App\Http\Requests\UserUpdateRequest;
+<<<<<<< HEAD
+=======
+use Illuminate\Http\Request;
+>>>>>>> ab87e36 ('update')
 use App\Models\User;
 
 class UserService
@@ -27,5 +31,16 @@ class UserService
     public function deleteUser($id)
     {
         return User::find($id)->delete();
+    }
+    //deleteall
+    public function deleteall(Request $request)
+    {
+        $ids = $request->ids;
+        User::whereIn('id', $ids)->delete();
+    }
+    //khoi phuc cac tep da xoa
+    public function restore(Request $request)
+    {
+        User::onlyTrashed()->restore();
     }
 }

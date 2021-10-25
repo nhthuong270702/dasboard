@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Student;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 
@@ -30,8 +31,19 @@ class StudentService
     {
         return Student::find($id)->delete();
     }
+    //deleteall
+    public function deleteall(Request $request)
+    {
+        $ids = $request->ids;
+        Student::whereIn('id', $ids)->delete();
+    }
     //count
     public function countStudent(Student $student) {
         return $student->count();
+    }
+    //khoi phuc cac tep da xoa
+    public function restore(Request $request)
+    {
+        Student::onlyTrashed()->restore();
     }
 }

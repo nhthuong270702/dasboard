@@ -18,22 +18,24 @@
                 </div>
                 <div class="col-sm-4" style="padding: 30px 20px; background-color:rgb(230, 233, 210);">
                     <h3 style="text-align: center">Sign Up</h3>
-                    @if (session('thongbao'))
-                        <div class="alert alert-danger">
-                            {{session('thongbao')}}
-                        </div>
+                    @if ($errors->any())
+                        <ul class="alert alert-danger">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     @endif
-                <form method="post" action="{{route('register')}}">
+                <form method="post" action="{{route('register')}}" role="form">
                     @csrf
                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                     <label for="">Name</label>
-                    <input class="form-control" type="text" name="name" placeholder="Input Name" required>
+                    <input class="form-control" type="text" name="name" placeholder="Input Name" value="{{old('name')}}" >
                     <label for="">Email</label>
-                    <input class="form-control" type="text" name="email" placeholder="Input Email" required>
+                    <input class="form-control" type="text" name="email" placeholder="Input Email" value="{{old('email')}}" >
                     <label for="">Password</label>
-                    <input class="form-control" type="password" name="password" placeholder="Input Password" required>
+                    <input class="form-control" type="password" name="password" placeholder="Input Password" >
                     <label for="">Password Confirmation</label>
-                    <input class="form-control" type="password" name="password_confirmation" placeholder="Input Password Confirmation" required><br>
+                    <input class="form-control" type="password" name="password_confirmation" placeholder="Input Password Confirmation" ><br>
                   <button type="submit" class="btn btn-primary center-block" name="register">Create Account</button><br>
                   <span style="text-align: center">Already have an account?
                   <a href="{{ route('login')}}">Sign in</a></span>

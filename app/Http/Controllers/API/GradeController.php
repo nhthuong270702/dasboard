@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Services\GradeService;
 use App\Models\Grade;
-use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreGradeRequest;
@@ -48,11 +47,11 @@ class GradeController extends Controller
         return view('pages.grade.add');
     }
     //luu lop
-    public function store(StoreGradeRequest $request)
-    {
-        $this->grade->saveGrade($request);
-        return redirect()->route('grade.list');
-    }
+        public function store(StoreGradeRequest $request)
+        {
+            $this->grade->saveGrade($request);
+            return redirect()->route('grade.list');
+        }
     public function edit($id)
     {
         $grade = $this->grade->getById($id);
@@ -70,6 +69,21 @@ class GradeController extends Controller
         $this->grade->deleteById($id);
         return redirect()->route('grade.list');
     }
+    //xoa tat ca
+    public function deleteall(Request $request)
+    {
+        $this->grade->deleteall($request);
+        return redirect('/grade/create');
+    }
+
+    //khoi phuc cac tep da xoa
+    public function restore(Request $request)
+    {
+        $this->grade->restore($request);
+         return redirect()->route('grade.list');
+    }
+
+
     //dem so hoc sinh trong lop
     public function countStudentInGrade(Grade $grade)
     {

@@ -30,8 +30,10 @@ class UserLoginRequest extends FormRequest
             'password' => 'required|string',
         ];
     }
-    public function failedValidation(Validator $validator)
+    public function messages()
     {
-        throw new HttpResponseException(response()->json([$validator->errors()], 200));
+        return [
+            'required' => ':attribute không được để trống',
+        ];
     }
 }

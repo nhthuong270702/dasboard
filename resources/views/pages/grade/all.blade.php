@@ -11,11 +11,15 @@
               <div class="col-md-12">
                  <table class="table">
                      <tbody>
-                        @foreach($all as $link)
+                        @if(isset($all))
+                            @foreach($all as $link)
                                 <tr>
                                     <td>{{ $link }}</td>
                                 </tr>
-                        @endforeach
+                            @endforeach
+                        @else
+                        {{ Redirect::to('/grade') }}
+                        @endif
                      </tbody>
                  </table>
               </div>

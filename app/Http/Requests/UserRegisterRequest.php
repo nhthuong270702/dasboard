@@ -28,12 +28,16 @@ class UserRegisterRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'email' => 'required|string|unique:users',
-            'password' => 'required|string|confirmed',
+            'email' => 'required|string',
+            'password' => 'required|min:8',
+            'password_confirmation' => 'required|same:password',
         ];
     }
-    public function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([$validator->errors()], 200));
+    public function messages() {
+        return [
+            'required' => ':attribute không được bỏ trống',
+            'password_confirmation.same' => 'Mật khẩu và xác nhận mật khẩu không trùng nhau',
+            'min'  => 'Mật khẩu phải ít nhất 8 kí tự'
+        ];
     }
 }
