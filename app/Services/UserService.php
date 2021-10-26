@@ -2,10 +2,9 @@
 namespace App\Services;
 
 use App\Http\Requests\UserUpdateRequest;
-<<<<<<< HEAD
-=======
+
 use Illuminate\Http\Request;
->>>>>>> ab87e36 ('update')
+
 use App\Models\User;
 
 class UserService

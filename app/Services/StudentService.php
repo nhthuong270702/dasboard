@@ -35,7 +35,7 @@ class StudentService
     public function deleteall(Request $request)
     {
         $ids = $request->ids;
-        Student::whereIn('id', $ids)->delete();
+        Student::whereIn('id',explode(",",$ids))->delete();
     }
     //count
     public function countStudent(Student $student) {

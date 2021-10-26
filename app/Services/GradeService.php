@@ -2,10 +2,8 @@
 
 namespace App\Services;
 
-<<<<<<< HEAD
-=======
+
 use Illuminate\Http\Request;
->>>>>>> ab87e36 ('update')
 use App\Models\Grade;
 use App\Http\Requests\StoreGradeRequest;
 use App\Http\Requests\UpdateGradeRequest;

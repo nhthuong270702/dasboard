@@ -10,7 +10,7 @@
                 <div class="add" style="margin: 20px 0">
                     <button class="btn btn-primary"><a style="color:aliceblue;" href="{{ route("grade.create") }}">Add grade</a></button>
                     <button class="btn btn-info"> <a style="color:aliceblue;" href="{{ route("grade.all") }}">Show All Grade & Student</a></button>
-                    <button style="margin: 5px;" class="btn btn-danger btn-xs delete-all" data-url="">Delete All</button>
+                    <button style="margin: 5px;" class="btn btn-danger delete-all" data-url="">Delete All</button>
                 </div>
                   <table class="table">
                      <thead>
@@ -74,9 +74,9 @@
         });
             if(idsArr.length <=0)
         {
-            alert("Please select atleast one record to delete.");
+            alert("Vui lòng chọn ít nhất 1 hàng để xóa.");
             }  else {
-            if(confirm("Are you sure, you want to delete the selected categories?")){
+            if(confirm("Bạn có muốn xóa các hàng đã chọn không?")){
             var strIds = idsArr.join(",");
             $.ajax({
             url: "{{ route('grade.deleteall') }}",
